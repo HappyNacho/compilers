@@ -1,17 +1,18 @@
-import ply.yacc as yacc
 import ply.lex as lex
-
+import ply.yacc as yacc
+import sys
+sys.path.insert(0, "../ply")
 
 
 literals = ['=', '+', '-', '*', '/', '(', ')']
-reserved = { 
+reserved = {
     'int' : 'INTDEC',
     'float' : 'FLOATDEC',
     'print' : 'PRINT'
  }
 
 tokens = [
-    'INUMBER', 'FNUMBER', 'NAME'
+    'NAME', 'INUMBER', 'FNUMBER'
 ] + list(reserved.values())
 
 
@@ -65,7 +66,7 @@ def p_statement_declare_int(p):
     names[p[2]] = { "type": "INT", "value":0}
 
 def p_is_assing(p):
-    '''is_assing : "=" expression 
+    '''is_assing : "=" expression
                 | '''
     if 4 in p:
         names[p[2]] = { "type": "INT", "value":p[4]}
@@ -100,6 +101,10 @@ def p_expression_binop(p):
         p[0] = p[1] + p[3]
     elif p[2] == '-':
         p[0] = p[1] - p[3]
+    elif p[2] == '*':
+        p[0] = p[1] * p[3]
+    elif p[2] == '/':
+        p[0] = p[1] / p[3]
 
 
 def p_expression_uminus(p):
@@ -138,8 +143,12 @@ def p_error(p):
     else:
         print("Syntax error at EOF")
 
-
 parser = yacc.yacc()
+
+
+#f = open("code.txt")
+#content = f.read()
+#print (content)
 
 while True:
     try:
