@@ -63,18 +63,23 @@ abstractTree = []
 def p_statement_declare_int(p):
     '''statement : INTDEC NAME is_assing
     '''
-    names[p[2]] = { "type": "INT", "value":0}
+    if type(p[3]) == float:
+            print('No puedes asignar flotantes a enteros')
+    else:
+        names[p[2]] = { "type": "INT", "value":p[3]}
+
+def p_statement_declare_float(p):
+    'statement : FLOATDEC NAME is_assing'
+    names[p[2]] = { "type": "FLOAT", "value":p[3]}
+
 
 def p_is_assing(p):
     '''is_assing : "=" expression
                 | '''
-    if 4 in p:
-        names[p[2]] = { "type": "INT", "value":p[4]}
+    p[0] = 0
+    if len(p) > 2:
+        p[0] = p[2]
 
-
-def p_statement_declare_float(p):
-    'statement : FLOATDEC NAME'
-    names[p[2]] = { "type": "FLOAT", "value":0}
 
 def p_statement_print(p):
     '''statement : PRINT '(' expression ')' '''
