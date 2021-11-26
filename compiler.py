@@ -1,10 +1,11 @@
 import ply.lex as lex
 import ply.yacc as yacc
 import sys
+import math
 sys.path.insert(0, "../ply")
 
 
-literals = ['=', '+', '-', '*', '/', '(', ')']
+literals = ['=', '+', '-', '*', '^', '/', '(', ')']
 reserved = {
     'int' : 'INTDEC',
     'float' : 'FLOATDEC',
@@ -60,13 +61,27 @@ precedence = (
 names = {}
 abstractTree = []
 
+class Node:
+    val = ''
+    type = ''
+    childrens = []
+
+
+    def __init__(self, val, type, childrens):
+        self.val = val
+        self.type = type
+        self.childrens = childrens
+
 def p_statement_declare_int(p):
     '''statement : INTDEC NAME is_assing
     '''
     if type(p[3]) == float:
             print('No puedes asignar flotantes a enteros')
     else:
-        names[p[2]] = { "type": "INT", "value":p[3]}
+        variable = Node( p[2], 'INT', [] )
+        n = Node(p[3], '=', [variable, p[3] ])
+        abstractTree.append(n)
+        #names[p[2]] = { "type": "INT", "value":p[3]}
 
 def p_statement_declare_float(p):
     'statement : FLOATDEC NAME is_assing'
@@ -76,9 +91,13 @@ def p_statement_declare_float(p):
 def p_is_assing(p):
     '''is_assing : "=" expression
                 | '''
-    p[0] = 0
+    p[0] = Node(0, 'INT',[])
+    #p[0] = 0
     if len(p) > 2:
-        p[0] = p[2]
+        p[0].type = p[2].type
+        p[0].val = p[2].val
+        p[0].childrens = [p[2]]
+        #p[0] = p[2]
 
 
 def p_statement_print(p):
@@ -101,7 +120,8 @@ def p_expression_binop(p):
     '''expression : expression '+' expression
                   | expression '-' expression
                   | expression '*' expression
-                  | expression '/' expression'''
+                  | expression '/' expression
+                  | expression '^' expression'''
     if p[2] == '+':
         p[0] = p[1] + p[3]
     elif p[2] == '-':
@@ -110,6 +130,8 @@ def p_expression_binop(p):
         p[0] = p[1] * p[3]
     elif p[2] == '/':
         p[0] = p[1] / p[3]
+    elif p[2] == '^':
+        p[0] = math.pow(p[1], p[3])
 
 
 def p_expression_uminus(p):

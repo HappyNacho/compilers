@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'left+-left*/rightUMINUSFLOATDEC FNUMBER INTDEC INUMBER NAME PRINTstatement : INTDEC NAME is_assing\n    statement : FLOATDEC NAME is_assingis_assing : "=" expression\n                | statement : PRINT \'(\' expression \')\' statement : NAME "=" expressionstatement : expressionexpression : expression \'+\' expression\n                  | expression \'-\' expression\n                  | expression \'*\' expression\n                  | expression \'/\' expressionexpression : \'-\' expression %prec UMINUSexpression : \'(\' expression \')\'expression : INUMBERexpression : FNUMBERexpression : NAME'
+_lr_signature = "AND BOOLEAN ELIF ELSE EQUALS FALSE FLOAT GTREAQTHAN ID IF INT LSSEQTHAN NOTEQUALS NUMF NUMI OR PRINT STRING TRUE\n    block : stmt block\n        | stmt\n    \n    stmt : simpstmt ';'\n        | flowctrl\n        | stmtprint ';'\n    \n    simpstmt : INT ID '=' numexpr\n        | FLOAT ID '=' numexpr\n    \n    simpstmt : INT ID\n        | FLOAT ID\n        | BOOLEAN ID\n        | STRING ID\n    \n    simpstmt : ID '=' expr\n    \n    expr : numexpr\n    \n    expr : boolexpr\n    \n    flowctrl : IF '(' boolexpr ')' '{' block '}' elif else\n    \n    elif : ELIF '(' boolexpr ')' '{' block '}' elif\n        | empty\n    \n    else : ELSE '{' block '}'\n        | empty\n    \n    numexpr : num\n    \n    numexpr : numexpr arit numexpr\n    \n    numexpr : ID '+' numexpr\n        | ID '*' numexpr\n        | ID '-' numexpr\n        | ID '/' numexpr\n        | ID '^' numexpr\n    \n    numexpr : '(' numexpr ')'\n    \n    num : NUMI\n        | NUMF\n        | ID\n    \n    num : '-' NUMI\n        | '-' NUMF\n        | '-' ID\n    \n    arit : '+'\n        | '-'\n        | '*'\n        | '/'\n        | '^'\n    \n    boolexpr : boolexpr AND boolexpr\n        | boolexpr OR boolexpr\n        | boolexpr EQUALS boolexpr\n        | boolexpr NOTEQUALS boolexpr\n    \n    boolexpr : ID EQUALS numexpr\n        | ID NOTEQUALS numexpr\n        | ID GTREAQTHAN numexpr\n        | ID LSSEQTHAN numexpr\n        | ID '<' numexpr\n        | ID '>' numexpr\n    \n    boolexpr : ID EQUALS boolexpr\n        | ID NOTEQUALS boolexpr\n    \n    boolexpr : boolop\n    \n    boolexpr : '(' boolexpr ')'\n    \n    boolop : numcomp\n        | bool\n    \n    bool : TRUE\n        | FALSE\n        | ID\n    \n    numcomp : numexpr comp numexpr\n    \n    comp : EQUALS\n        | NOTEQUALS\n        | GTREAQTHAN\n        | LSSEQTHAN\n        | '<'\n        | '>'\n    \n    stmtprint : PRINT '(' expr ')'\n    empty :"
     
-_lr_action_items = {'INTDEC':([0,],[2,]),'FLOATDEC':([0,],[4,]),'PRINT':([0,],[5,]),'NAME':([0,2,4,6,8,12,14,17,18,19,20,23,],[3,11,13,16,16,16,16,16,16,16,16,16,]),'-':([0,3,6,7,8,9,10,12,14,15,16,17,18,19,20,21,23,24,26,27,28,29,30,31,32,],[8,-16,8,18,8,-14,-15,8,8,18,-16,8,8,8,8,-12,8,18,18,-13,-8,-9,-10,-11,18,]),'(':([0,5,6,8,12,14,17,18,19,20,23,],[6,14,6,6,6,6,6,6,6,6,6,]),'INUMBER':([0,6,8,12,14,17,18,19,20,23,],[9,9,9,9,9,9,9,9,9,9,]),'FNUMBER':([0,6,8,12,14,17,18,19,20,23,],[10,10,10,10,10,10,10,10,10,10,]),'$end':([1,3,7,9,10,11,13,16,21,22,24,25,27,28,29,30,31,32,33,],[0,-16,-7,-14,-15,-4,-4,-16,-12,-1,-6,-2,-13,-8,-9,-10,-11,-3,-5,]),'=':([3,11,13,],[12,23,23,]),'+':([3,7,9,10,15,16,21,24,26,27,28,29,30,31,32,],[-16,17,-14,-15,17,-16,-12,17,17,-13,-8,-9,-10,-11,17,]),'*':([3,7,9,10,15,16,21,24,26,27,28,29,30,31,32,],[-16,19,-14,-15,19,-16,-12,19,19,-13,19,19,-10,-11,19,]),'/':([3,7,9,10,15,16,21,24,26,27,28,29,30,31,32,],[-16,20,-14,-15,20,-16,-12,20,20,-13,20,20,-10,-11,20,]),')':([9,10,15,16,21,26,27,28,29,30,31,],[-14,-15,27,-16,-12,33,-13,-8,-9,-10,-11,]),}
+_lr_action_items = {'INT':([0,2,4,14,15,106,108,109,111,112,114,116,120,121,123,124,],[6,6,-4,-3,-5,6,-66,-66,-17,-15,-19,6,-18,6,-66,-16,]),'FLOAT':([0,2,4,14,15,106,108,109,111,112,114,116,120,121,123,124,],[8,8,-4,-3,-5,8,-66,-66,-17,-15,-19,8,-18,8,-66,-16,]),'BOOLEAN':([0,2,4,14,15,106,108,109,111,112,114,116,120,121,123,124,],[9,9,-4,-3,-5,9,-66,-66,-17,-15,-19,9,-18,9,-66,-16,]),'STRING':([0,2,4,14,15,106,108,109,111,112,114,116,120,121,123,124,],[10,10,-4,-3,-5,10,-66,-66,-17,-15,-19,10,-18,10,-66,-16,]),'ID':([0,2,4,6,8,9,10,14,15,17,21,22,23,29,30,38,39,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,106,108,109,111,112,114,115,116,120,121,123,124,],[7,7,-4,16,18,19,20,-3,-5,24,41,24,44,77,24,44,81,44,44,44,44,44,44,24,24,44,44,44,44,44,44,-34,-35,-36,-37,-38,-59,-60,-61,-62,-63,-64,41,41,41,41,7,-66,-66,-17,-15,-19,41,7,-18,7,-66,-16,]),'IF':([0,2,4,14,15,106,108,109,111,112,114,116,120,121,123,124,],[11,11,-4,-3,-5,11,-66,-66,-17,-15,-19,11,-18,11,-66,-16,]),'PRINT':([0,2,4,14,15,106,108,109,111,112,114,116,120,121,123,124,],[12,12,-4,-3,-5,12,-66,-66,-17,-15,-19,12,-18,12,-66,-16,]),'$end':([1,2,4,13,14,15,108,109,111,112,114,120,123,124,],[0,-2,-4,-1,-3,-5,-66,-66,-17,-15,-19,-18,-66,-16,]),'}':([2,4,13,14,15,107,108,109,111,112,114,118,120,122,123,124,],[-2,-4,-1,-3,-5,108,-66,-66,-17,-15,-19,120,-18,123,-66,-16,]),';':([3,5,16,18,19,20,24,25,26,27,28,31,32,33,34,35,36,37,41,44,45,75,76,77,80,83,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,],[14,15,-8,-9,-10,-11,-30,-12,-13,-14,-20,-51,-28,-29,-53,-54,-55,-56,-57,-30,-6,-31,-32,-33,-7,-65,-22,-23,-24,-25,-26,-43,-49,-44,-50,-45,-46,-47,-48,-21,-58,-39,-40,-41,-42,-27,-52,]),'=':([7,16,18,],[17,23,38,]),'(':([11,12,17,21,22,23,30,38,39,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,110,115,],[21,22,30,39,30,46,30,46,39,46,46,46,46,46,46,30,30,46,46,46,46,46,46,-34,-35,-36,-37,-38,-59,-60,-61,-62,-63,-64,39,39,39,39,115,39,]),'NUMI':([17,21,22,23,29,30,38,39,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,115,],[32,32,32,32,75,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,-34,-35,-36,-37,-38,-59,-60,-61,-62,-63,-64,32,32,32,32,32,]),'NUMF':([17,21,22,23,29,30,38,39,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,115,],[33,33,33,33,76,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,-34,-35,-36,-37,-38,-59,-60,-61,-62,-63,-64,33,33,33,33,33,]),'-':([17,21,22,23,24,26,28,30,32,33,38,39,41,42,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,80,81,84,85,86,87,88,89,90,92,94,95,96,97,98,99,104,115,],[29,29,29,29,49,61,-20,29,-28,-29,29,29,49,61,49,61,29,29,29,29,29,29,29,29,29,29,29,29,29,29,-34,-35,-36,-37,-38,-59,-60,-61,-62,-63,-64,29,29,29,29,-31,-32,-33,61,61,49,61,61,61,61,61,61,61,61,61,61,61,61,61,61,-27,29,]),'TRUE':([17,21,22,30,39,52,53,71,72,73,74,115,],[36,36,36,36,36,36,36,36,36,36,36,36,]),'FALSE':([17,21,22,30,39,52,53,71,72,73,74,115,],[37,37,37,37,37,37,37,37,37,37,37,37,]),'+':([24,26,28,32,33,41,42,44,45,75,76,77,78,80,81,84,85,86,87,88,89,90,92,94,95,96,97,98,99,104,],[47,60,-20,-28,-29,47,60,47,60,-31,-32,-33,60,60,47,60,60,60,60,60,60,60,60,60,60,60,60,60,60,-27,]),'*':([24,26,28,32,33,41,42,44,45,75,76,77,78,80,81,84,85,86,87,88,89,90,92,94,95,96,97,98,99,104,],[48,62,-20,-28,-29,48,62,48,62,-31,-32,-33,62,62,48,62,62,62,62,62,62,62,62,62,62,62,62,62,62,-27,]),'/':([24,26,28,32,33,41,42,44,45,75,76,77,78,80,81,84,85,86,87,88,89,90,92,94,95,96,97,98,99,104,],[50,63,-20,-28,-29,50,63,50,63,-31,-32,-33,63,63,50,63,63,63,63,63,63,63,63,63,63,63,63,63,63,-27,]),'^':([24,26,28,32,33,41,42,44,45,75,76,77,78,80,81,84,85,86,87,88,89,90,92,94,95,96,97,98,99,104,],[51,64,-20,-28,-29,51,64,51,64,-31,-32,-33,64,64,51,64,64,64,64,64,64,64,64,64,64,64,64,64,64,-27,]),'EQUALS':([24,26,27,28,31,32,33,34,35,36,37,40,41,42,44,75,76,77,78,79,81,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,117,],[52,65,73,-20,-51,-28,-29,-53,-54,-55,-56,73,52,65,-30,-31,-32,-33,65,73,52,-22,-23,-24,-25,-26,65,73,65,73,-45,-46,-47,-48,-21,-58,73,73,73,73,-27,-52,73,]),'NOTEQUALS':([24,26,27,28,31,32,33,34,35,36,37,40,41,42,44,75,76,77,78,79,81,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,117,],[53,66,74,-20,-51,-28,-29,-53,-54,-55,-56,74,53,66,-30,-31,-32,-33,66,74,53,-22,-23,-24,-25,-26,66,74,66,74,-45,-46,-47,-48,-21,-58,74,74,74,74,-27,-52,74,]),'GTREAQTHAN':([24,26,28,32,33,41,42,44,75,76,77,78,81,85,86,87,88,89,90,92,98,104,],[54,67,-20,-28,-29,54,67,-30,-31,-32,-33,67,54,-22,-23,-24,-25,-26,67,67,-21,-27,]),'LSSEQTHAN':([24,26,28,32,33,41,42,44,75,76,77,78,81,85,86,87,88,89,90,92,98,104,],[55,68,-20,-28,-29,55,68,-30,-31,-32,-33,68,55,-22,-23,-24,-25,-26,68,68,-21,-27,]),'<':([24,26,28,32,33,41,42,44,75,76,77,78,81,85,86,87,88,89,90,92,98,104,],[56,69,-20,-28,-29,56,69,-30,-31,-32,-33,69,56,-22,-23,-24,-25,-26,69,69,-21,-27,]),'>':([24,26,28,32,33,41,42,44,75,76,77,78,81,85,86,87,88,89,90,92,98,104,],[57,70,-20,-28,-29,57,70,-30,-31,-32,-33,70,57,-22,-23,-24,-25,-26,70,70,-21,-27,]),')':([24,26,27,28,31,32,33,34,35,36,37,40,41,43,44,75,76,77,78,79,81,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,117,],[-30,-13,-14,-20,-51,-28,-29,-53,-54,-55,-56,82,-57,83,-30,-31,-32,-33,104,105,-30,104,-22,-23,-24,-25,-26,-43,-49,-44,-50,-45,-46,-47,-48,-21,-58,-39,-40,-41,-42,-27,-52,119,]),'AND':([24,27,28,31,32,33,34,35,36,37,40,41,44,75,76,77,79,81,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,117,],[-30,71,-20,-51,-28,-29,-53,-54,-55,-56,71,-57,-30,-31,-32,-33,71,-57,-22,-23,-24,-25,-26,-43,71,-44,71,-45,-46,-47,-48,-21,-58,71,71,71,71,-27,-52,71,]),'OR':([24,27,28,31,32,33,34,35,36,37,40,41,44,75,76,77,79,81,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,117,],[-30,72,-20,-51,-28,-29,-53,-54,-55,-56,72,-57,-30,-31,-32,-33,72,-57,-22,-23,-24,-25,-26,-43,72,-44,72,-45,-46,-47,-48,-21,-58,72,72,72,72,-27,-52,72,]),'{':([82,113,119,],[106,116,121,]),'ELIF':([108,123,],[110,110,]),'ELSE':([108,109,111,123,124,],[-66,113,-17,-66,-16,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'statement':([0,],[1,]),'expression':([0,6,8,12,14,17,18,19,20,23,],[7,15,21,24,26,28,29,30,31,32,]),'is_assing':([11,13,],[22,25,]),}
+_lr_goto_items = {'block':([0,2,106,116,121,],[1,13,107,118,122,]),'stmt':([0,2,106,116,121,],[2,2,2,2,2,]),'simpstmt':([0,2,106,116,121,],[3,3,3,3,3,]),'flowctrl':([0,2,106,116,121,],[4,4,4,4,4,]),'stmtprint':([0,2,106,116,121,],[5,5,5,5,5,]),'expr':([17,22,],[25,43,]),'numexpr':([17,21,22,23,30,38,39,46,47,48,49,50,51,52,53,54,55,56,57,58,59,71,72,73,74,115,],[26,42,26,45,78,80,78,84,85,86,87,88,89,90,92,94,95,96,97,98,99,42,42,42,42,42,]),'boolexpr':([17,21,22,30,39,52,53,71,72,73,74,115,],[27,40,27,79,79,91,93,100,101,102,103,117,]),'num':([17,21,22,23,30,38,39,46,47,48,49,50,51,52,53,54,55,56,57,58,59,71,72,73,74,115,],[28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,]),'boolop':([17,21,22,30,39,52,53,71,72,73,74,115,],[31,31,31,31,31,31,31,31,31,31,31,31,]),'numcomp':([17,21,22,30,39,52,53,71,72,73,74,115,],[34,34,34,34,34,34,34,34,34,34,34,34,]),'bool':([17,21,22,30,39,52,53,71,72,73,74,115,],[35,35,35,35,35,35,35,35,35,35,35,35,]),'arit':([26,42,45,78,80,84,85,86,87,88,89,90,92,94,95,96,97,98,99,],[58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,]),'comp':([26,42,78,90,92,],[59,59,59,59,59,]),'elif':([108,123,],[109,124,]),'empty':([108,109,123,],[111,114,111,]),'else':([109,],[112,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,21 +26,71 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> statement","S'",1,None,None,None),
-  ('statement -> INTDEC NAME is_assing','statement',3,'p_statement_declare_int','compiler.py',64),
-  ('statement -> FLOATDEC NAME is_assing','statement',3,'p_statement_declare_float','compiler.py',69),
-  ('is_assing -> = expression','is_assing',2,'p_is_assing','compiler.py',74),
-  ('is_assing -> <empty>','is_assing',0,'p_is_assing','compiler.py',75),
-  ('statement -> PRINT ( expression )','statement',4,'p_statement_print','compiler.py',82),
-  ('statement -> NAME = expression','statement',3,'p_statement_assign','compiler.py',86),
-  ('statement -> expression','statement',1,'p_statement_expr','compiler.py',93),
-  ('expression -> expression + expression','expression',3,'p_expression_binop','compiler.py',98),
-  ('expression -> expression - expression','expression',3,'p_expression_binop','compiler.py',99),
-  ('expression -> expression * expression','expression',3,'p_expression_binop','compiler.py',100),
-  ('expression -> expression / expression','expression',3,'p_expression_binop','compiler.py',101),
-  ('expression -> - expression','expression',2,'p_expression_uminus','compiler.py',113),
-  ('expression -> ( expression )','expression',3,'p_expression_group','compiler.py',118),
-  ('expression -> INUMBER','expression',1,'p_expression_inumber','compiler.py',123),
-  ('expression -> FNUMBER','expression',1,'p_expression_fnumber','compiler.py',128),
-  ('expression -> NAME','expression',1,'p_expression_name','compiler.py',133),
+  ("S' -> block","S'",1,None,None,None),
+  ('block -> stmt block','block',2,'p_block','plyparser.py',98),
+  ('block -> stmt','block',1,'p_block','plyparser.py',99),
+  ('stmt -> simpstmt ;','stmt',2,'p_stmt','plyparser.py',110),
+  ('stmt -> flowctrl','stmt',1,'p_stmt','plyparser.py',111),
+  ('stmt -> stmtprint ;','stmt',2,'p_stmt','plyparser.py',112),
+  ('simpstmt -> INT ID = numexpr','simpstmt',4,'p_simpstmt_assdec_num','plyparser.py',119),
+  ('simpstmt -> FLOAT ID = numexpr','simpstmt',4,'p_simpstmt_assdec_num','plyparser.py',120),
+  ('simpstmt -> INT ID','simpstmt',2,'p_simpstmt_dec','plyparser.py',131),
+  ('simpstmt -> FLOAT ID','simpstmt',2,'p_simpstmt_dec','plyparser.py',132),
+  ('simpstmt -> BOOLEAN ID','simpstmt',2,'p_simpstmt_dec','plyparser.py',133),
+  ('simpstmt -> STRING ID','simpstmt',2,'p_simpstmt_dec','plyparser.py',134),
+  ('simpstmt -> ID = expr','simpstmt',3,'p_simpstmt_ass','plyparser.py',142),
+  ('expr -> numexpr','expr',1,'p_expr_num','plyparser.py',150),
+  ('expr -> boolexpr','expr',1,'p_expr_bool','plyparser.py',156),
+  ('flowctrl -> IF ( boolexpr ) { block } elif else','flowctrl',9,'p_flowctrl_if','plyparser.py',163),
+  ('elif -> ELIF ( boolexpr ) { block } elif','elif',8,'p_elif','plyparser.py',177),
+  ('elif -> empty','elif',1,'p_elif','plyparser.py',178),
+  ('else -> ELSE { block }','else',4,'p_else','plyparser.py',190),
+  ('else -> empty','else',1,'p_else','plyparser.py',191),
+  ('numexpr -> num','numexpr',1,'p_numexpr_num','plyparser.py',201),
+  ('numexpr -> numexpr arit numexpr','numexpr',3,'p_numexpr_arit','plyparser.py',208),
+  ('numexpr -> ID + numexpr','numexpr',3,'p_numexpr_id','plyparser.py',220),
+  ('numexpr -> ID * numexpr','numexpr',3,'p_numexpr_id','plyparser.py',221),
+  ('numexpr -> ID - numexpr','numexpr',3,'p_numexpr_id','plyparser.py',222),
+  ('numexpr -> ID / numexpr','numexpr',3,'p_numexpr_id','plyparser.py',223),
+  ('numexpr -> ID ^ numexpr','numexpr',3,'p_numexpr_id','plyparser.py',224),
+  ('numexpr -> ( numexpr )','numexpr',3,'p_numexpr_par','plyparser.py',235),
+  ('num -> NUMI','num',1,'p_num','plyparser.py',246),
+  ('num -> NUMF','num',1,'p_num','plyparser.py',247),
+  ('num -> ID','num',1,'p_num','plyparser.py',248),
+  ('num -> - NUMI','num',2,'p_num_neg','plyparser.py',255),
+  ('num -> - NUMF','num',2,'p_num_neg','plyparser.py',256),
+  ('num -> - ID','num',2,'p_num_neg','plyparser.py',257),
+  ('arit -> +','arit',1,'p_arit','plyparser.py',264),
+  ('arit -> -','arit',1,'p_arit','plyparser.py',265),
+  ('arit -> *','arit',1,'p_arit','plyparser.py',266),
+  ('arit -> /','arit',1,'p_arit','plyparser.py',267),
+  ('arit -> ^','arit',1,'p_arit','plyparser.py',268),
+  ('boolexpr -> boolexpr AND boolexpr','boolexpr',3,'p_boolexpr_bin','plyparser.py',277),
+  ('boolexpr -> boolexpr OR boolexpr','boolexpr',3,'p_boolexpr_bin','plyparser.py',278),
+  ('boolexpr -> boolexpr EQUALS boolexpr','boolexpr',3,'p_boolexpr_bin','plyparser.py',279),
+  ('boolexpr -> boolexpr NOTEQUALS boolexpr','boolexpr',3,'p_boolexpr_bin','plyparser.py',280),
+  ('boolexpr -> ID EQUALS numexpr','boolexpr',3,'p_boolexpr_idnum','plyparser.py',289),
+  ('boolexpr -> ID NOTEQUALS numexpr','boolexpr',3,'p_boolexpr_idnum','plyparser.py',290),
+  ('boolexpr -> ID GTREAQTHAN numexpr','boolexpr',3,'p_boolexpr_idnum','plyparser.py',291),
+  ('boolexpr -> ID LSSEQTHAN numexpr','boolexpr',3,'p_boolexpr_idnum','plyparser.py',292),
+  ('boolexpr -> ID < numexpr','boolexpr',3,'p_boolexpr_idnum','plyparser.py',293),
+  ('boolexpr -> ID > numexpr','boolexpr',3,'p_boolexpr_idnum','plyparser.py',294),
+  ('boolexpr -> ID EQUALS boolexpr','boolexpr',3,'p_boolexpr_idbool','plyparser.py',302),
+  ('boolexpr -> ID NOTEQUALS boolexpr','boolexpr',3,'p_boolexpr_idbool','plyparser.py',303),
+  ('boolexpr -> boolop','boolexpr',1,'p_boolexpr_one','plyparser.py',311),
+  ('boolexpr -> ( boolexpr )','boolexpr',3,'p_boolexpr_par','plyparser.py',318),
+  ('boolop -> numcomp','boolop',1,'p_boolop','plyparser.py',325),
+  ('boolop -> bool','boolop',1,'p_boolop','plyparser.py',326),
+  ('bool -> TRUE','bool',1,'p_bool','plyparser.py',333),
+  ('bool -> FALSE','bool',1,'p_bool','plyparser.py',334),
+  ('bool -> ID','bool',1,'p_bool','plyparser.py',335),
+  ('numcomp -> numexpr comp numexpr','numcomp',3,'p_numcomp','plyparser.py',342),
+  ('comp -> EQUALS','comp',1,'p_comp','plyparser.py',350),
+  ('comp -> NOTEQUALS','comp',1,'p_comp','plyparser.py',351),
+  ('comp -> GTREAQTHAN','comp',1,'p_comp','plyparser.py',352),
+  ('comp -> LSSEQTHAN','comp',1,'p_comp','plyparser.py',353),
+  ('comp -> <','comp',1,'p_comp','plyparser.py',354),
+  ('comp -> >','comp',1,'p_comp','plyparser.py',355),
+  ('stmtprint -> PRINT ( expr )','stmtprint',4,'p_print','plyparser.py',362),
+  ('empty -> <empty>','empty',0,'p_empty','plyparser.py',369),
 ]

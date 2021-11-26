@@ -1,0 +1,10 @@
+boolean a;
+a = true;
+
+int x = 10;
+int y = 20;
+if(a==true){
+    print(0);
+}
+int z = x+y;
+print(z);
